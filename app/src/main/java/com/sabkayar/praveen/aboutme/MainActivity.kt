@@ -3,20 +3,22 @@ package com.sabkayar.praveen.aboutme
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.sabkayar.praveen.aboutme.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
+
+    // Instance of MyName data class.
+    private val myName: MyName = MyName("Praveen Kumar")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding=DataBindingUtil.setContentView(this,R.layout.activity_main)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        mBinding.doneButton.setOnClickListener(){
+        mBinding.myName = myName
+
+        mBinding.doneButton.setOnClickListener() {
             addNickName(it)
         }
     }
@@ -24,8 +26,8 @@ class MainActivity : AppCompatActivity() {
     private fun addNickName(view: View) {
 
         mBinding.apply {
-            nicknameText.text = nicknameEdit.text
-            invalidateAll()
+            myName?.nickname = nicknameEdit.text.toString()
+            invalidateAll() //Mandatory for fresh update in databinding
             nicknameEdit.visibility = View.GONE
             view.visibility = View.GONE
             nicknameText.visibility = View.VISIBLE
