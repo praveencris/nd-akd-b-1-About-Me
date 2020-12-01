@@ -1,6 +1,5 @@
 package com.sabkayar.praveen.aboutme
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -8,26 +7,29 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.sabkayar.praveen.aboutme.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var mBinding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mBinding=DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        findViewById<Button>(R.id.done_button).setOnClickListener() {
+        mBinding.doneButton.setOnClickListener(){
             addNickName(it)
         }
     }
 
     private fun addNickName(view: View) {
-        val nickNameEditText = findViewById<EditText>(R.id.nickname_edit)
-        val nickNameTextView = findViewById<TextView>(R.id.nickname_text)
 
-        nickNameTextView.text=nickNameEditText.text
-        nickNameEditText.visibility=View.GONE
-        view.visibility =View.GONE
-        nickNameTextView.visibility=View.VISIBLE
-
+        mBinding.apply {
+            nicknameText.text = nicknameEdit.text
+            invalidateAll()
+            nicknameEdit.visibility = View.GONE
+            view.visibility = View.GONE
+            nicknameText.visibility = View.VISIBLE
+        }
         hideKeyboard(view)
 
     }
